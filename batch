@@ -1,0 +1,124 @@
+<%@page import="java.sql.*"%>
+<% Class.forName("com.mysql.cj.jdbc.Driver");%>
+ 
+<html>
+<head>
+<style >
+form{
+  width: 40%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+table,th,td{
+position:relative;
+border:1px solid;
+text-align:center;
+}
+table{
+ position: relative;
+ justify-content:center;
+ align-items:center;
+}
+
+body{
+background-image: url(https://png.pngtree.com/thumb_back/fw800/background/20240421/pngtree-geometric-black-background-abstract-4k-dark-tone-wallpaper-backdrop-gradient-animation-image_15709714.jpg );
+background-repeat: no-repeat;
+background-size: cover;
+}
+table,td{
+border:1px  dotted black;
+ border-collapse:collapse;
+padding:10px;
+font-size:20px;
+font-family:sans-serif;
+min-width:100px;
+box-shadow:0 0 20px rgba(0,0,0,0.15);
+ }
+th{
+background: white;
+padding:12px 15px;
+text-transform-uppercase;
+}
+td:nth-child(5n+1){
+
+background:white;}
+td:nth-child(5n+2){
+background:white;}
+td:nth-child(5n+3){
+background:white;}
+td:nth-child(5n+4){
+background:white;}
+td:nth-child(5n+5){
+background:white;}
+td:nth-child(5n+6){
+background:white;}
+th{
+background-color: grey;
+text-align:left;
+}
+tbody tr:hover{
+background-color:#dddddd;
+border-bottom:1px solid #dddddd;
+}
+
+</style>
+<meta charset="UTF-8">
+<title>NEW BATCH</title>
+</head>
+<body>
+<form action="add.jsp" method="post">
+ <div style="margin-left:140%;margin-bottom:5%">
+     
+        <h1 style="color:white">BATCHES</h1>
+         <br><br>
+        <input type="text"  name="bname" placeholder="Batch name"> <br><br><br>
+        <input type="text"  name="year" placeholder="Enter year"><br><br><br> 
+        <div class="input">
+        <input style="color=white;background-color=black;" type="submit" value="ADD DETAILS"> <br><br><br>
+        </div>
+        </div>
+    </form>
+    <center><table style="cellpadding:0;width:75%"></center>
+    <thead>
+    <tr style="margin-top:30%">
+        <th scope="col" id="vzebra-comedy">Batch number</th>
+        <th>Batch name</th>
+        <th>Year</th>
+       <th>Actions</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    <%
+    Connection con;
+    Statement st;
+    ResultSet rs;
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    con=DriverManager.getConnection("jdbc:mysql://localhost/employee","root","root");
+    String query="select * from batch;";
+    st=con.createStatement();
+    rs=st.executeQuery(query);
+    
+    while(rs.next()){
+    	String id=rs.getString("sno");
+    
+    
+    %>
+    <tr>
+       <td><%=rs.getString(1) %></td>
+       <td><%=rs.getString(2) %></td>
+       <td><%=rs.getString(3) %></td>
+        <td class ="actions">
+       <button> <a href="update.jsp?id=<%=id %>">Edit</a> </button>
+       <button><a href="batchdel.jsp?id=<%=id %>">Delete</a></button>
+       </td>
+      
+    </tr>
+    <%} %>
+    </tbody>
+    </table>
+</body>
+</html>
